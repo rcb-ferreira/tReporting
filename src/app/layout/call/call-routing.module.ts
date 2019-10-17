@@ -4,7 +4,20 @@ import { CallComponent } from './call.component';
 
 const routes: Routes = [
     {
-        path: '', component: CallComponent
+        path: '',
+        component: CallComponent,
+        children: [
+            {
+                path: 'trail',
+                component: CallComponent,
+                data: { title: 'Trail' }
+            },
+            {
+                path: 'interaction',
+                component: CallComponent,
+                data: { title: 'Interaction' }
+            }
+        ]
     }
 ];
 

@@ -4,9 +4,10 @@ import { CommonModule } from '@angular/common';
 import { CallRoutingModule } from './call-routing.module';
 import { CallComponent } from './call.component';
 import { PageHeaderModule } from './../../shared';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-    imports: [CommonModule, CallRoutingModule, PageHeaderModule],
+    imports: [CommonModule, CallRoutingModule, PageHeaderModule, NgbModule],
     declarations: [CallComponent]
 })
 export class CallModule {}

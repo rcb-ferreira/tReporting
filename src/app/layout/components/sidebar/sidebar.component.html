@@ -1,49 +1,21 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
     <div class="list-group">
-        <!-- <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-dashboard"></i>&nbsp;
-            <span>{{ 'Dashboard' | translate }}</span>
-        </a> -->
-        <!-- <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
-            <span>{{ 'Charts' | translate }}</span>
-        </a>
-        <a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-table"></i>&nbsp;
-            <span>{{ 'Tables' | translate }}</span>
-        </a>
-        <a [routerLink]="['/forms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-edit"></i>&nbsp;
-            <span>{{ 'Forms' | translate }}</span>
-        </a>
-        <a [routerLink]="['/bs-element']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-desktop"></i>&nbsp;
-            <span>{{ 'Bootstrap Element' | translate }}</span>
-        </a>
-        <a [routerLink]="['/grid']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-wrench"></i>&nbsp;
-            <span>{{ 'Bootstrap Grid' | translate }}</span>
-        </a>
-        <a [routerLink]="['/components']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-th-list"></i>&nbsp;
-            <span>{{ 'Component' | translate }}</span>
-        </a> -->
         <div class="nested-menu">
             <a class="list-group-item">
-                <i class="fa fa-plus"></i>&nbsp;
+                <i class="fa fa-plus"></i>
                 <span>{{ 'Call' | translate }}</span>
             </a>
             <span class="nested expand">
                 <ul class="submenu">
                     <li>
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-monument"></i>&nbsp;
+                        <a [routerLink]="['/call/trail']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-monument"></i>
                             <span>{{ 'Trail details' | translate }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-monument"></i>&nbsp;
+                        <a [routerLink]="['/call/interaction']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-monument"></i>
                             <span>{{ 'Interaction' | translate }}</span>
                         </a>
                     </li>
@@ -52,26 +24,26 @@
         </div>
         <div class="nested-menu">
             <a class="list-group-item">
-                <i class="fa fa-plus"></i>&nbsp;
+                <i class="fa fa-plus"></i>
                 <span>{{ 'Distribution' | translate }}</span>
             </a>
             <span class="nested expand">
                 <ul class="submenu">
                     <li>
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Agents' | translate }}</span>
+                        <a [routerLink]="['/distribution/agent']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-monument"></i>
+                            <span>{{ 'Agent' | translate }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-monument"></i>&nbsp;
+                        <a [routerLink]="['/distribution/group']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-monument"></i>
                             <span>{{ 'Group' | translate }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-monument"></i>&nbsp;
+                        <a [routerLink]="['/distribution/hourly']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-monument"></i>
                             <span>{{ 'Hourly' | translate }}</span>
                         </a>
                     </li>
@@ -80,20 +52,20 @@
         </div>
         <div class="nested-menu">
             <a class="list-group-item">
-                <i class="fa fa-plus"></i>&nbsp;
+                <i class="fa fa-plus"></i>
                 <span>{{ 'Heatmap' | translate }}</span>
             </a>
             <span class="nested expand">
                 <ul class="submenu">
                     <li>
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-monument"></i>&nbsp;
+                        <a [routerLink]="['/heatmap/agent']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-monument"></i>
                             <span>{{ 'Agent' | translate }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-monument"></i>&nbsp;
+                        <a [routerLink]="['/heatmap/group']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-monument"></i>
                             <span>{{ 'Group' | translate }}</span>
                         </a>
                     </li>
@@ -102,7 +74,7 @@
         </div>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
-        <i class="fa fa-fw fa-angle-double-{{collapsed?'right':'left'}}"></i>&nbsp;
+        <i class="fa fa-fw fa-angle-double-{{collapsed?'right':'left'}}"></i>
         <span>{{ 'Collapse Sidebar' | translate }}</span>
     </div>
 </nav>
