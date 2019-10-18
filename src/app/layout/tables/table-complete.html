@@ -1,0 +1,32 @@
+<form>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" *ngFor="let header of tableHeaders; index as i;" sortable="{{ header.data }}"
+          (sort)="onSort($event)">
+          {{ header.title }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let country of countries$ | async">
+        <td scope="row" *ngFor="let header of tableHeaders; index as i;">
+          {{ country[header.data] || '-' }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-1 border bg-light">
+    <ngb-pagination
+      [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+      <option [ngValue]="2">2 items per page</option>
+      <option [ngValue]="4">4 items per page</option>
+      <option [ngValue]="6">6 items per page</option>
+    </select>
+  </div>
+
+</form>

@@ -9,9 +9,12 @@ import { routerTransition } from '../router.animations';
     animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
+    title: string;
     constructor(
       public router: Router
-    ) {}
+    ) {
+        this.title = 'Teleforge';
+    }
 
     ngOnInit() {}
 

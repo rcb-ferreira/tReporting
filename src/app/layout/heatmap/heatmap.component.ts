@@ -4,15 +4,16 @@ import { Router } from '@angular/router';
 import { ReportingService } from 'src/app/shared/services/reporting.service';
 
 @Component({
-    selector: 'app-call',
-    templateUrl: './call.component.html',
-    styleUrls: ['./call.component.scss'],
+    selector: 'app-heatmap',
+    templateUrl: './heatmap.component.html',
+    styleUrls: ['./heatmap.component.scss'],
     animations: [routerTransition()]
 })
-export class CallComponent implements OnInit {
+export class HeatmapComponent implements OnInit {
     tableHeaders: any;
     tableBody: any;
     filters: any[] = [];
+    title: string;
 
     constructor(
         readonly router: Router,
@@ -22,20 +23,7 @@ export class CallComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.reporting.getReports()
-        //     .subscribe(
-        //         data => {
-        //             // this.tableHeaders = data['headers'].headers;
-        //             this.tableHeaders = data['headers'].headers.filter(val => {
-        //                 if (val.visible !== false) {
-        //                     return val;
-        //                 }
-        //             });
-
-        //             this.tableBody = data['data'];
-        //         },
-        //         error => console.log('error', error)
-        //     );
+        this.title = 'Hallo world';
     }
 
     filter(type) {

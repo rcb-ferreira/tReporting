@@ -1,0 +1,18 @@
+<table class="table table-striped table-sm">
+    <thead>
+        <tr>
+            <th scope="col" 
+                *ngFor="let header of tableHeaders; index as i;"
+                sortable="{{ header.data }}" (sort)="onSort($event)">
+                {{ header.title }} 
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of items; index as i;">
+            <td *ngFor="let header of tableHeaders; index as i;">
+                {{ item[header.data] || '-' }}
+            </td>
+        </tr>
+    </tbody>
+</table>

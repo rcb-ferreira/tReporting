@@ -1,19 +1,19 @@
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { TablesComponent } from './tables.component';
-import { TablesModule } from './tables.module';
+import { DistributionComponent } from './distribution.component';
+import { DistributionModule } from './distribution.module';
 
-describe('TablesComponent', () => {
+describe('DistributionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ TablesModule, RouterTestingModule ],
+      imports: [ DistributionModule, RouterTestingModule ],
     })
     .compileComponents();
   }));
 
   it('should create', () => {
-    const fixture = TestBed.createComponent(TablesComponent);
+    const fixture = TestBed.createComponent(DistributionComponent);
     const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
