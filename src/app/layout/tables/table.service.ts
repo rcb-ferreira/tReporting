@@ -3,7 +3,7 @@ import {Injectable, PipeTransform} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 
 import {TableItem} from './tableItem';
-import {TABLEITEMS} from './tableItems';
+
 import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import {SortDirection} from './sortable.directive';
@@ -19,6 +19,7 @@ interface State {
   searchTerm: string;
   sortColumn: string;
   sortDirection: SortDirection;
+  sortItems: Array<any>;
 }
 
 function compare(v1, v2) {
@@ -51,10 +52,11 @@ export class TableItemService {
 
   private _state: State = {
     page: 1,
-    pageSize: 4,
+    pageSize: 25,
     searchTerm: '',
     sortColumn: '',
-    sortDirection: ''
+    sortDirection: '',
+    sortItems: []
   };
 
   constructor(private pipe: DecimalPipe) {
@@ -78,12 +80,14 @@ export class TableItemService {
   get page() { return this._state.page; }
   get pageSize() { return this._state.pageSize; }
   get searchTerm() { return this._state.searchTerm; }
+  get sortItems() { return this._state.sortItems; }
 
   set page(page: number) { this._set({page}); }
   set pageSize(pageSize: number) { this._set({pageSize}); }
   set searchTerm(searchTerm: string) { this._set({searchTerm}); }
   set sortColumn(sortColumn: string) { this._set({sortColumn}); }
   set sortDirection(sortDirection: SortDirection) { this._set({sortDirection}); }
+  set sortItems(sortItems) { this._set({sortItems}); }
 
   private _set(patch: Partial<State>) {
     Object.assign(this._state, patch);
@@ -91,10 +95,10 @@ export class TableItemService {
   }
 
   private _search(): Observable<SearchResult> {
-    const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
+    const {sortColumn, sortDirection, pageSize, page, searchTerm, sortItems} = this._state;
 
     // 1. sort
-    let tableitems = sort(TABLEITEMS, sortColumn, sortDirection);
+    let tableitems = sort(sortItems, sortColumn, sortDirection);
 
     // 2. filter
     tableitems = tableitems.filter(country => matches(country, searchTerm, this.pipe));
