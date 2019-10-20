@@ -43,7 +43,7 @@ function matches(tableitem: TableItem, term: string, pipe: PipeTransform) {
 }
 
 @Injectable({providedIn: 'root'})
-export class CountryService {
+export class TableItemService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _tableitems$ = new BehaviorSubject<TableItem[]>([]);

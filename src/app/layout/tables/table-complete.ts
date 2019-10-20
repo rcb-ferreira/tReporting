@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import { HEADERS } from './headers';
 
 import {TableItem} from './tableItem';
-import {CountryService} from './table.service';
+import {TableItemService} from './table.service';
 import {NgbdSortableHeaderDirective, SortEvent} from './sortable.directive';
 
 @Component({
@@ -13,7 +13,7 @@ import {NgbdSortableHeaderDirective, SortEvent} from './sortable.directive';
   selector: 'ngbd-table-complete',
   templateUrl: './table-complete.html',
   styleUrls: ['./table-sortable.scss'],
-  providers: [CountryService, DecimalPipe]
+  providers: [TableItemService, DecimalPipe]
 })
 export class NgbdTableCompleteComponent {
   tableitems$: Observable<TableItem[]>;
@@ -22,7 +22,7 @@ export class NgbdTableCompleteComponent {
   @ViewChildren(NgbdSortableHeaderDirective) headers: QueryList<NgbdSortableHeaderDirective>;
   tableHeaders: any;
 
-  constructor(public service: CountryService) {
+  constructor(public service: TableItemService) {
     this.tableitems$ = service.tableitems$;
     this.total$ = service.total$;
 
