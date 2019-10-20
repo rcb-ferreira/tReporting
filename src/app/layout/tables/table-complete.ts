@@ -4,26 +4,26 @@ import {Observable} from 'rxjs';
 
 import { HEADERS } from './headers';
 
-import {Country} from './country';
-import {CountryService} from './country.service';
-import {NgbdSortableHeader, SortEvent} from './sortable.directive';
-
+import {TableItem} from './tableItem';
+import {CountryService} from './table.service';
+import {NgbdSortableHeaderDirective, SortEvent} from './sortable.directive';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'ngbd-table-complete',
   templateUrl: './table-complete.html',
   styleUrls: ['./table-sortable.scss'],
   providers: [CountryService, DecimalPipe]
 })
-export class NgbdTableComplete {
-  countries$: Observable<Country[]>;
+export class NgbdTableCompleteComponent {
+  tableitems$: Observable<TableItem[]>;
   total$: Observable<number>;
 
-  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+  @ViewChildren(NgbdSortableHeaderDirective) headers: QueryList<NgbdSortableHeaderDirective>;
   tableHeaders: any;
 
   constructor(public service: CountryService) {
-    this.countries$ = service.countries$;
+    this.tableitems$ = service.tableitems$;
     this.total$ = service.total$;
 
     this.tableHeaders = HEADERS.filter(val => {

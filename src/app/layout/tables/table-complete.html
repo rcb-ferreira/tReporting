@@ -9,9 +9,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let country of countries$ | async">
+      <tr *ngFor="let tableitem of tableitems$ | async">
         <td scope="row" *ngFor="let header of tableHeaders; index as i;">
-          {{ country[header.data] || '-' }}
+          {{ tableitem[header.data] || '-' }}
         </td>
       </tr>
     </tbody>
