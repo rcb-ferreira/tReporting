@@ -1,5 +1,5 @@
 import {DecimalPipe} from '@angular/common';
-import {Component, QueryList, ViewChildren} from '@angular/core';
+import {Component, QueryList, ViewChildren, Input} from '@angular/core';
 import {Observable} from 'rxjs';
 
 import { HEADERS } from './headers';
@@ -16,21 +16,17 @@ import {NgbdSortableHeaderDirective, SortEvent} from './sortable.directive';
   providers: [TableItemService, DecimalPipe]
 })
 export class NgbdTableCompleteComponent {
+  @ViewChildren(NgbdSortableHeaderDirective) headers: QueryList<NgbdSortableHeaderDirective>;
+  @Input() tableheaders: any;
+  @Input() tablerows: any;
+  @Input() rows = 0;
+
   tableitems$: Observable<TableItem[]>;
   total$: Observable<number>;
 
-  @ViewChildren(NgbdSortableHeaderDirective) headers: QueryList<NgbdSortableHeaderDirective>;
-  tableHeaders: any;
-
   constructor(public service: TableItemService) {
     this.tableitems$ = service.tableitems$;
-    this.total$ = service.total$;
-
-    this.tableHeaders = HEADERS.filter(val => {
-      if (val['visible'] !== false) {
-        return val;
-      }
-    });
+    // this.total$ = this.tablerows.length$;
   }
 
   onSort({column, direction}: SortEvent) {

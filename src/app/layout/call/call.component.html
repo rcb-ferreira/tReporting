@@ -60,6 +60,10 @@
         </div>
     </div>
     <div class="row">
-        <ngbd-table-complete class="table-responsive col-12"></ngbd-table-complete>
+        <ngbd-table-complete 
+            [tableheaders]="tableHeaders"
+            [tablerows]="tableRows"
+            [rows]="totals"
+            class="table-responsive col-12"></ngbd-table-complete>
     </div>
 </div>

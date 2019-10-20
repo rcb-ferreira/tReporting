@@ -11,8 +11,9 @@ import { ReportingService } from 'src/app/shared/services/reporting.service';
 })
 export class CallComponent implements OnInit {
     tableHeaders: any;
-    tableBody: any;
+    tableRows: any;
     filters: any[] = [];
+    totals: number;
 
     constructor(
         readonly router: Router,
@@ -22,20 +23,21 @@ export class CallComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.reporting.getReports()
-        //     .subscribe(
-        //         data => {
-        //             // this.tableHeaders = data['headers'].headers;
-        //             this.tableHeaders = data['headers'].headers.filter(val => {
-        //                 if (val.visible !== false) {
-        //                     return val;
-        //                 }
-        //             });
+        this.reporting.getReports()
+            .subscribe(
+                data => {
+                    // this.tableHeaders = data['headers'].headers;
+                    this.tableHeaders = data['headers'].headers.filter(val => {
+                        if (val.visible !== false) {
+                            return val;
+                        }
+                    });
 
-        //             this.tableBody = data['data'];
-        //         },
-        //         error => console.log('error', error)
-        //     );
+                    this.tableRows = data['data'];
+                    this.totals = data['rows'];
+                },
+                error => console.log('error', error)
+            );
     }
 
     filter(type) {
