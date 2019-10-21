@@ -101,7 +101,7 @@ export class TableItemService {
     let tableitems = sort(sortItems, sortColumn, sortDirection);
 
     // 2. filter
-    tableitems = tableitems.filter(country => matches(country, searchTerm, this.pipe));
+    // tableitems = tableitems.filter(country => matches(country, searchTerm, this.pipe));
     const total = tableitems.length;
 
     // 3. paginate

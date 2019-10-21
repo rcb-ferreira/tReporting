@@ -10,17 +10,17 @@ const routes: Routes = [
             {
                 path: 'agent',
                 component: DistributionComponent,
-                data: { title: 'agent' }
+                data: { title: 'Agent distribution', type: 'agent' }
             },
             {
                 path: 'group',
                 component: DistributionComponent,
-                data: { title: 'group' }
+                data: { title: 'Group distribution', type: 'group' }
             },
             {
                 path: 'hourly',
                 component: DistributionComponent,
-                data: { title: 'hourly' }
+                data: { title: 'Hourly distribution', type:'hourly' }
             }
         ]
     }

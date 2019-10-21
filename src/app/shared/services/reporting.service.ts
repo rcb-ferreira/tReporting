@@ -43,6 +43,16 @@ export class ReportingService {
         return this.http.get(url);
     }
 
+    getHeatmap(type) {
+      const url = `/assets/temp/${type}-heatmap.json`;
+      return this.http.get(url);
+    }
+
+    getDistribution(type) {
+      const url = `/assets/temp/${type}-distribution.json`;
+      return this.http.get(url);
+    }
+
     getFilter(type) {
         const url = `/assets/temp/${type}.json`;
         return this.http.get(url, httpOptions);

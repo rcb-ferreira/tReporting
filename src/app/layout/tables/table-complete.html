@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of tableitems$ | async">
-        <td *ngFor="let header of tableheaders">{{ row[header.data] || '-'}}</td>
+        <td *ngFor="let header of tableheaders; index as i">{{ row[header.data] || '-'}}</td>
       </tr>
     </tbody>
   </table>
@@ -26,5 +26,4 @@
       <option [ngValue]="100">100 items per page</option>
     </select>
   </div>
-
 </form>

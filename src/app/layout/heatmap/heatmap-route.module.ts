@@ -10,12 +10,12 @@ const routes: Routes = [
             {
                 path: 'agent',
                 component: HeatmapComponent,
-                data: { title: 'agent' }
+                data: { title: 'Agents heatmap', type: 'agent' }
             },
             {
                 path: 'group',
                 component: HeatmapComponent,
-                data: { title: 'group' }
+                data: { title: 'Groups heatmap', type: 'group' }
             }
         ]
     }
