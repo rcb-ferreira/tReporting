@@ -13,6 +13,22 @@ const httpOptions = {
 
 const api = `http://localhost:8081/api`;
 
+let params = '';
+    params += 'fromdate=2014-01-10';
+    params += '&todate=2019-12-30';
+    params += '&agent=all';
+    params += '&group=all';
+    params += '&disposition=all';
+    params += '&calltype=all';
+    params += '&page-view=2';
+    params += '&refresh-time=0';
+    params += '&report-type=hosted';
+    params += '&output-type=duration';
+
+httpOptions.params = new HttpParams({
+  fromString: params
+});
+
 @Injectable({
     providedIn: 'root'
 })
@@ -44,13 +60,18 @@ export class ReportingService {
     }
 
     getHeatmap(type) {
-      const url = `/assets/temp/${type}-heatmap.json`;
-      return this.http.get(url);
+      const url = `${api}/reports/${type}/heatmap`;
+      return this.http.get(url, httpOptions);
     }
 
     getDistribution(type) {
-      const url = `/assets/temp/${type}-distribution.json`;
-      return this.http.get(url);
+      const url = `${api}/reports/${type}/distribution`;
+      return this.http.get(url, httpOptions);
+    }
+
+    getReport(type) {
+      const url = `${api}/reports/${type}`;
+      return this.http.get(url, httpOptions);
     }
 
     getFilter(type) {

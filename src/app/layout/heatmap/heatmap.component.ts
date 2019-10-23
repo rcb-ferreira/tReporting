@@ -17,6 +17,7 @@ export class HeatmapComponent {
     tableRows: any;
     totals: any;
     type: any;
+    loading: boolean;
 
     constructor(
         readonly router: Router,
@@ -43,15 +44,20 @@ export class HeatmapComponent {
     }
 
     fetchHeatmap(type) {
-
+        this.loading = true;
         this.reporting.getHeatmap(type)
             .subscribe(
                 data => {
+                    this.loading = false;
+
                     this.tableHeaders = data['headers'].headers;
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 },
-                error => console.log('error', error)
+                error => {
+                    this.loading = false;
+                    console.log('error', error);
+                }
             );
     }
 

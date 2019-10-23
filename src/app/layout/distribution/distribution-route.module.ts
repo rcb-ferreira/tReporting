@@ -20,7 +20,7 @@ const routes: Routes = [
             {
                 path: 'hourly',
                 component: DistributionComponent,
-                data: { title: 'Hourly distribution', type:'hourly' }
+                data: { title: 'Hourly distribution', type: 'hours' }
             }
         ]
     }

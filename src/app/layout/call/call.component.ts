@@ -16,6 +16,7 @@ export class CallComponent {
     totals: number;
     title: any;
     type: any;
+    loading: boolean;
 
     constructor(
         readonly router: Router,
@@ -40,20 +41,20 @@ export class CallComponent {
     }
 
     fetchCall(type) {
-        this.reporting.getCall(type)
+        this.loading = true;
+        this.reporting.getReport(type)
             .subscribe(
                 data => {
-                    // this.tableHeaders = data['headers'].headers;
-                    this.tableHeaders = data['headers'].headers.filter(val => {
-                        if (val.visible !== false) {
-                            return val;
-                        }
-                    });
+                    this.loading = false;
 
+                    this.tableHeaders = data['headers'].headers;
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 },
-                error => console.log('error', error)
+                error => {
+                    this.loading = false;
+                    console.log('error', error);
+                }
             );
     }
 

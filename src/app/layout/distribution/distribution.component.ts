@@ -17,6 +17,7 @@ export class DistributionComponent {
     tableRows: any;
     totals: any;
     type: any;
+    loading: boolean;
 
     constructor(
         readonly router: Router,
@@ -34,23 +35,48 @@ export class DistributionComponent {
 
             if (event instanceof NavigationEnd) {
                 activated = false;
-                if (router.url.match(/\/distribution\/(group|agent|hourly)/gi)) {
+                if (router.url.match(/\/distribution\/(group|agent)/gi)) {
                     this.fetchDistribution(this.type);
+                } else if (router.url.match(/\/distribution\/(hourly)/gi)) {
+                    this.fetchHours(this.type);
                 }
             }
         });
     }
 
     fetchDistribution(type) {
-
+        this.loading = true;
         this.reporting.getDistribution(type)
             .subscribe(
                 data => {
+                    this.loading = false;
+
                     this.tableHeaders = data['headers'].headers;
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 },
-                error => console.log('error', error)
+                error => {
+                    this.loading = false;
+                    console.log('error', error);
+                }
+            );
+    }
+
+    fetchHours(type) {
+        this.loading = true;
+        this.reporting.getReport(type)
+            .subscribe(
+                data => {
+                    this.loading = false;
+
+                    this.tableHeaders = data['headers'].headers;
+                    this.tableRows = data['data'];
+                    this.totals = data['rows'];
+                },
+                error => {
+                    this.loading = false;
+                    console.log('error', error);
+                }
             );
     }
 }
