@@ -10,12 +10,12 @@ const routes: Routes = [
             {
                 path: 'trail',
                 component: CallComponent,
-                data: { title: 'Trail' }
+                data: { title: 'Trail', type: 'trail' }
             },
             {
                 path: 'interaction',
                 component: CallComponent,
-                data: { title: 'Interaction' }
+                data: { title: 'Interaction', type: 'interaction' }
             }
         ]
     }

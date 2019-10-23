@@ -20,7 +20,7 @@ export class ReportingService {
     reports: any = [];
     constructor(private http: HttpClient) {}
 
-    getReports() {
+    getCall(type) {
         // let params = '';
         //     params += 'fromdate=2014-01-10';
         //     params += '&todate=2019-12-30';
@@ -39,7 +39,7 @@ export class ReportingService {
 
         // const url = `${api}/reports/trail`;
 
-        const url = `/assets/temp/trail.json`;
+        const url = `/assets/temp/${type}.json`;
         return this.http.get(url);
     }
 

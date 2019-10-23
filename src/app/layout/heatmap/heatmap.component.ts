@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { Router, ActivationEnd, ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 import { ReportingService } from 'src/app/shared/services/reporting.service';
@@ -9,13 +9,14 @@ import { ReportingService } from 'src/app/shared/services/reporting.service';
     styleUrls: ['./heatmap.component.scss'],
     animations: [routerTransition()]
 })
-export class HeatmapComponent implements OnInit {
+export class HeatmapComponent {
     tableHeaders: any;
     tableBody: any;
     filters: any[] = [];
     title: string;
     tableRows: any;
     totals: any;
+    type: any;
 
     constructor(
         readonly router: Router,
@@ -26,21 +27,19 @@ export class HeatmapComponent implements OnInit {
 
         let activated = false;
         router.events.subscribe(event => {
-
             if (event instanceof ActivationEnd && !activated) {
                 this.title = event.snapshot.data.title;
-                this.fetchHeatmap(event.snapshot.data.type);
+                this.type = event.snapshot.data.type;
                 activated = true;
             }
 
-            if (event instanceof NavigationEnd && activated) {
+            if (event instanceof NavigationEnd) {
                 activated = false;
+                if (router.url.match(/\/heatmap\/(group|agent)/gi)) {
+                    this.fetchHeatmap(this.type);
+                }
             }
         });
-    }
-
-    ngOnInit() {
-
     }
 
     fetchHeatmap(type) {
@@ -48,12 +47,7 @@ export class HeatmapComponent implements OnInit {
         this.reporting.getHeatmap(type)
             .subscribe(
                 data => {
-                    this.tableHeaders = data['headers'].headers.filter(val => {
-                        if (val.type !== 'drill') {
-                            return val;
-                        }
-                    });
-
+                    this.tableHeaders = data['headers'].headers;
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 },

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-import { Router } from '@angular/router';
+import { Router, ActivationEnd, NavigationEnd } from '@angular/router';
 import { ReportingService } from 'src/app/shared/services/reporting.service';
 
 @Component({
@@ -9,21 +9,38 @@ import { ReportingService } from 'src/app/shared/services/reporting.service';
     styleUrls: ['./call.component.scss'],
     animations: [routerTransition()]
 })
-export class CallComponent implements OnInit {
+export class CallComponent {
     tableHeaders: any;
     tableRows: any;
     filters: any[] = [];
     totals: number;
+    title: any;
+    type: any;
 
     constructor(
         readonly router: Router,
         readonly reporting: ReportingService
     ) {
         this.filters = [];
+        let activated = false;
+        router.events.subscribe(event => {
+            if (event instanceof ActivationEnd && !activated) {
+                this.title = event.snapshot.data.title;
+                this.type = event.snapshot.data.type;
+                activated = true;
+            }
+
+            if (event instanceof NavigationEnd) {
+                activated = false;
+                if (router.url.match(/\/call\/(trail|interaction)/gi)) {
+                    this.fetchCall(this.type);
+                }
+            }
+        });
     }
 
-    ngOnInit() {
-        this.reporting.getReports()
+    fetchCall(type) {
+        this.reporting.getCall(type)
             .subscribe(
                 data => {
                     // this.tableHeaders = data['headers'].headers;
