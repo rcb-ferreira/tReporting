@@ -47,7 +47,12 @@ export class CallComponent {
                 data => {
                     this.loading = false;
 
-                    this.tableHeaders = data['headers'].headers;
+                    this.tableHeaders = data[0]['headers']
+                        .filter(val => {
+                            if (val.visible !== false) {
+                                return val;
+                            }
+                        });
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 },

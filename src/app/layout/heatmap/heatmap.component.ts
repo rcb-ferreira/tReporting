@@ -50,7 +50,7 @@ export class HeatmapComponent {
                 data => {
                     this.loading = false;
 
-                    this.tableHeaders = data['headers'].headers;
+                    this.tableHeaders = data[0]['headers'];
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 },
