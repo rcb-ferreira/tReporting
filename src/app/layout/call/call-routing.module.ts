@@ -15,7 +15,7 @@ const routes: Routes = [
             {
                 path: 'interaction',
                 component: CallComponent,
-                data: { title: 'Interaction', type: 'interaction' }
+                data: { title: 'Interaction', type: 'overview' }
             }
         ]
     }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { Router, ActivationEnd, NavigationEnd } from '@angular/router';
 import { ReportingService } from 'src/app/shared/services/reporting.service';
+import { LoaderService } from '../../shared/services/loader.service';
 
 @Component({
     selector: 'app-call',
@@ -20,7 +21,8 @@ export class CallComponent {
 
     constructor(
         readonly router: Router,
-        readonly reporting: ReportingService
+        readonly reporting: ReportingService,
+        public loaderService: LoaderService
     ) {
         this.filters = [];
         let activated = false;
@@ -41,12 +43,9 @@ export class CallComponent {
     }
 
     fetchCall(type) {
-        this.loading = true;
         this.reporting.getReport(type)
             .subscribe(
                 data => {
-                    this.loading = false;
-
                     this.tableHeaders = data[0]['headers']
                         .filter(val => {
                             if (val.visible !== false) {
@@ -55,10 +54,6 @@ export class CallComponent {
                         });
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
-                },
-                error => {
-                    this.loading = false;
-                    console.log('error', error);
                 }
             );
     }

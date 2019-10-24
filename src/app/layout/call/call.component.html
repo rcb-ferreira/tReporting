@@ -59,16 +59,8 @@
             </div>
         </div>
     </div>
-
-    <div *ngIf="loading; else elseBlock" class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
+    <div class="row">
+        <ngbd-table-complete *ngIf="tableRows" [tableheaders]="tableHeaders" [tablerows]="tableRows" [rows]="totals"
+            class="table-responsive col-12"></ngbd-table-complete>
     </div>
-    <ng-template #elseBlock>
-        <div class="row">
-            <ngbd-table-complete *ngIf="tableRows" [tableheaders]="tableHeaders" [tablerows]="tableRows" [rows]="totals"
-                class="table-responsive col-12"></ngbd-table-complete>
-        </div>
-    </ng-template>
 </div>
