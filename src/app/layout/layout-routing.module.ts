@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', redirectTo: 'call', pathMatch: 'prefix' },
+            { path: '', redirectTo: 'call', pathMatch: '' },
             { path: 'call', loadChildren: () => import('./call/call.module').then(m => m.CallModule) },
             { path: 'distribution', loadChildren: () => import('./distribution/distribution.module').then(m => m.DistributionModule) },
             { path: 'heatmap', loadChildren: () => import('./heatmap/heatmap.module').then(m => m.HeatmapModule) }

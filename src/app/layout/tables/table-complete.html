@@ -2,7 +2,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col" *ngFor="let header of tableheaders; index as i;" sortable="{{ header.data }}"
+        <th scope="col" *ngFor="let header of tableheaders;" sortable="{{ header.data }}"
           (sort)="onSort($event)">
           {{ header.title }}
         </th>
@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of tableitems$ | async">
-        <td *ngFor="let header of tableheaders; index as i">{{ row[header.data] || '-'}}</td>
+        <td *ngFor="let header of tableheaders;">{{ row[header.data] }}</td>
       </tr>
     </tbody>
   </table>

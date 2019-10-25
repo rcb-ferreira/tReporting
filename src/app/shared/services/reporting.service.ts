@@ -24,7 +24,7 @@ export class ReportingService {
     reports: any = [];
     constructor(private http: HttpClient) {}
 
-    getHeatmap(type) {
+    getReport(type, report = null) {
       params += '&agent=all';
       params += '&group=all';
       params += '&disposition=all';
@@ -38,43 +38,9 @@ export class ReportingService {
         fromString: params
       });
 
-      const url = `${api}/reports/${type}/heatmap`;
-      return this.http.get(url, httpOptions);
-    }
+      let url = `${api}/reports/${type}`;
+          url += report !== null ? `/${report}` : `${''}`;
 
-    getDistribution(type) {
-      params += '&agent=all';
-      params += '&group=all';
-      params += '&disposition=all';
-      params += '&calltype=all';
-      params += '&page-view=2';
-      params += '&refresh-time=0';
-      params += '&report-type=hosted';
-      params += '&output-type=duration';
-
-      httpOptions.params = new HttpParams({
-        fromString: params
-      });
-
-      const url = `${api}/reports/${type}/distribution`;
-      return this.http.get(url, httpOptions);
-    }
-
-    getReport(type) {
-      params += '&agent=all';
-      params += '&group=all';
-      params += '&disposition=all';
-      params += '&calltype=all';
-      params += '&page-view=2';
-      params += '&refresh-time=0';
-      params += '&report-type=hosted';
-      params += '&output-type=duration';
-
-      httpOptions.params = new HttpParams({
-        fromString: params
-      });
-
-      const url = `${api}/reports/${type}`;
       return this.http.get(url, httpOptions);
     }
 

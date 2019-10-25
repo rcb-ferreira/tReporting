@@ -36,46 +36,26 @@ export class DistributionComponent {
             if (event instanceof NavigationEnd) {
                 activated = false;
                 if (router.url.match(/\/distribution\/(group|agent)/gi)) {
-                    this.fetchDistribution(this.type);
+                    this.fetchReport(this.type, 'distribution');
                 } else if (router.url.match(/\/distribution\/(hourly)/gi)) {
-                    this.fetchHours(this.type);
+                    this.fetchReport(this.type);
                 }
             }
         });
     }
 
-    fetchDistribution(type) {
-        this.loading = true;
-        this.reporting.getDistribution(type)
+    fetchReport(type, report = null) {
+
+        this.tableHeaders = [];
+        this.tableRows = [];
+        this.totals = [];
+
+        this.reporting.getReport(type, report)
             .subscribe(
                 data => {
-                    this.loading = false;
-
                     this.tableHeaders = data[0]['headers'];
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
-                },
-                error => {
-                    this.loading = false;
-                    console.log('error', error);
-                }
-            );
-    }
-
-    fetchHours(type) {
-        this.loading = true;
-        this.reporting.getReport(type)
-            .subscribe(
-                data => {
-                    this.loading = false;
-
-                    this.tableHeaders = data[0]['headers'];
-                    this.tableRows = data['data'];
-                    this.totals = data['rows'];
-                },
-                error => {
-                    this.loading = false;
-                    console.log('error', error);
                 }
             );
     }

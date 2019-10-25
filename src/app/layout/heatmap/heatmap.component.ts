@@ -37,26 +37,24 @@ export class HeatmapComponent {
             if (event instanceof NavigationEnd) {
                 activated = false;
                 if (router.url.match(/\/heatmap\/(group|agent)/gi)) {
-                    this.fetchHeatmap(this.type);
+                    this.fetchReport(this.type, 'heatmap');
                 }
             }
         });
     }
 
-    fetchHeatmap(type) {
-        this.loading = true;
-        this.reporting.getHeatmap(type)
+    fetchReport(type, report = null) {
+
+        this.tableHeaders = [];
+        this.tableRows = [];
+        this.totals = [];
+
+        this.reporting.getReport(type, report)
             .subscribe(
                 data => {
-                    this.loading = false;
-
                     this.tableHeaders = data[0]['headers'];
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
-                },
-                error => {
-                    this.loading = false;
-                    console.log('error', error);
                 }
             );
     }

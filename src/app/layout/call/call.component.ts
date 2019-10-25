@@ -36,22 +36,22 @@ export class CallComponent {
             if (event instanceof NavigationEnd) {
                 activated = false;
                 if (router.url.match(/\/call\/(trail|interaction)/gi)) {
-                    this.fetchCall(this.type);
+                    this.fetchReport(this.type);
                 }
             }
         });
     }
 
-    fetchCall(type) {
-        this.reporting.getReport(type)
+    fetchReport(type, report = null) {
+
+        this.tableHeaders = [];
+        this.tableRows = [];
+        this.totals = 0;
+
+        this.reporting.getReport(type, report)
             .subscribe(
                 data => {
-                    this.tableHeaders = data[0]['headers']
-                        .filter(val => {
-                            if (val.visible !== false) {
-                                return val;
-                            }
-                        });
+                    this.tableHeaders = data[0]['headers'];
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 }
