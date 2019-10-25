@@ -7,6 +7,7 @@ const routes: Routes = [
         path: '',
         component: DistributionComponent,
         children: [
+            { path: '', redirectTo: 'agent', pathMatch: 'prefix' },
             {
                 path: 'agent',
                 component: DistributionComponent,

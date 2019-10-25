@@ -7,6 +7,7 @@ const routes: Routes = [
         path: '',
         component: HeatmapComponent,
         children: [
+            { path: '', redirectTo: 'agent', pathMatch: 'prefix' },
             {
                 path: 'agent',
                 component: HeatmapComponent,

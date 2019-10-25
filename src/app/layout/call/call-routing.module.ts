@@ -7,6 +7,7 @@ const routes: Routes = [
         path: '',
         component: CallComponent,
         children: [
+            { path: '', redirectTo: 'trail', pathMatch: 'prefix' },
             {
                 path: 'trail',
                 component: CallComponent,
