@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { CallRoutingModule } from './call-routing.module';
 import { CallComponent } from './call.component';
-import { PageHeaderModule } from './../../shared';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PageHeaderModule, FiltersModule } from './../../shared';
 import { NgbdTableCompleteModule } from '../tables/table-complete.module';
 
 @NgModule({
-    imports: [CommonModule, CallRoutingModule, PageHeaderModule, NgbModule, NgbdTableCompleteModule],
+    imports: [CommonModule, CallRoutingModule, PageHeaderModule, FiltersModule, NgbdTableCompleteModule],
     declarations: [CallComponent]
 })
 export class CallModule {}

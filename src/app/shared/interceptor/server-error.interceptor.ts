@@ -13,13 +13,21 @@ export class ServerErrorInterceptor implements HttpInterceptor {
     constructor(public loaderService: LoaderService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.loaderService.show();
+
+        if (!request.url.match(/\/v2\//gi)) {
+            this.loaderService.show();
+        }
+
         return next.handle(request).pipe(
             retry(1),
             catchError((error: HttpErrorResponse) => {
                 return throwError(error);
             }),
-            finalize(() => this.loaderService.hide())
+            finalize(() => {
+                if (!request.url.match(/\/v2\//gi)) {
+                    this.loaderService.hide();
+                }
+            })
         );
     }
 }

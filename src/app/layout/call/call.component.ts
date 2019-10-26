@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { Router, ActivationEnd, NavigationEnd } from '@angular/router';
 import { ReportingService } from 'src/app/shared/services/reporting.service';
-import { LoaderService } from '../../shared/services/loader.service';
 
 @Component({
     selector: 'app-call',
@@ -13,7 +12,6 @@ import { LoaderService } from '../../shared/services/loader.service';
 export class CallComponent {
     tableHeaders: any;
     tableRows: any;
-    filters: any[] = [];
     totals: number;
     title: any;
     type: any;
@@ -22,9 +20,7 @@ export class CallComponent {
     constructor(
         readonly router: Router,
         readonly reporting: ReportingService,
-        public loaderService: LoaderService
     ) {
-        this.filters = [];
         let activated = false;
         router.events.subscribe(event => {
             if (event instanceof ActivationEnd && !activated) {
@@ -55,17 +51,6 @@ export class CallComponent {
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 }
-            );
-    }
-
-    filter(type) {
-
-        this.reporting.getFilter(type)
-            .subscribe(
-                data => {
-                    this.filters[`${type}`] = data;
-                },
-                error => console.log('error', error)
             );
     }
 }

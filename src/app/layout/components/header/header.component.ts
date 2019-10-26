@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { ReportingService } from 'src/app/shared/services/reporting.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-header',
@@ -9,9 +10,14 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
     public pushRightClass: string;
-
-    constructor(private translate: TranslateService, public router: Router) {
-
+    user$: Observable<string>;
+    filters: any[] = [];
+    constructor(
+        public router: Router,
+        public reporting: ReportingService
+    ) {
+        this.filters = [];
+        this.user$ = this.reporting.user$;
         this.router.events.subscribe(val => {
             if (
                 val instanceof NavigationEnd &&
@@ -46,7 +52,14 @@ export class HeaderComponent implements OnInit {
         localStorage.removeItem('isLoggedin');
     }
 
-    changeLang(language: string) {
-        this.translate.use(language);
+    filter(type) {
+
+        this.reporting.getFilter(type)
+            .subscribe(
+                data => {
+                    this.filters[`${type}`] = data;
+                },
+                error => console.log('error', error)
+            );
     }
 }
