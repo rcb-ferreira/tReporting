@@ -10,47 +10,24 @@ import { ReportingService } from 'src/app/shared/services/reporting.service';
     animations: [routerTransition()]
 })
 export class DistributionComponent {
+    hideTable: boolean;
     tableHeaders: any;
-    tableBody: any;
-    filters: any[] = [];
-    title: string;
     tableRows: any;
-    totals: any;
-    type: any;
-    loading: boolean;
+    totals: number;
 
     constructor(
-        readonly router: Router,
-        readonly reporting: ReportingService
+        readonly reporting: ReportingService,
     ) {
-        this.filters = [];
-
-        let activated = false;
-        router.events.subscribe(event => {
-            if (event instanceof ActivationEnd && !activated) {
-                this.title = event.snapshot.data.title;
-                this.type = event.snapshot.data.type;
-                activated = true;
-            }
-
-            if (event instanceof NavigationEnd) {
-                activated = false;
-                if (router.url.match(/\/distribution\/(group|agent)/gi)) {
-                    this.fetchReport(this.type, 'distribution');
-                } else if (router.url.match(/\/distribution\/(hourly)/gi)) {
-                    this.fetchReport(this.type);
-                }
-            }
-        });
+        this.hideTable = true;
     }
 
-    fetchReport(type, report = null) {
-
+    fetchReport(event) {
+        this.hideTable = false;
         this.tableHeaders = [];
         this.tableRows = [];
-        this.totals = [];
+        this.totals = 0;
 
-        this.reporting.getReport(type, report)
+        this.reporting.getReport(event.type, event.report)
             .subscribe(
                 data => {
                     this.tableHeaders = data[0]['headers'];
@@ -59,4 +36,5 @@ export class DistributionComponent {
                 }
             );
     }
+
 }
