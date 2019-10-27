@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { group } from '@angular/animations';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,18 +15,6 @@ const httpOptions = {
 // const api = `http://localhost:8081/api`;
 const api = `http://htrm.herokuapp.com/api`;
 
-let params = '';
-    params += 'fromdate=2014-01-10';
-    params += '&todate=2019-12-30';
-    params += '&agent=all';
-    params += '&group=all';
-    params += '&disposition=all';
-    params += '&calltype=all';
-    params += '&page-view=2';
-    params += '&refresh-time=0';
-    params += '&report-type=hosted';
-    params += '&output-type=duration';
-
 interface State {
   user: string;
 }
@@ -34,46 +23,59 @@ interface State {
     providedIn: 'root'
 })
 export class ReportingService {
-    private _users$ = new BehaviorSubject<any>('');
-    private _state: State = {
-      user: '',
-    };
+  private _users$ = new BehaviorSubject<any>('');
+  private _state: State = {
+    user: '',
+  };
 
-    constructor(private http: HttpClient) {
-      this.getUser();
-    }
+  constructor(private http: HttpClient) {
+    this.getUser();
+  }
 
-    get user$() { return this._users$.asObservable(); }
-    set user(user: string) { this._set({ user }); }
+  get user$() { return this._users$.asObservable(); }
+  set user(user: string) { this._set({ user }); }
 
-    private _set(patch: Partial<State>) {
-      Object.assign(this._state, patch);
-    }
+  private _set(patch: Partial<State>) {
+    Object.assign(this._state, patch);
+  }
 
-    getReport(type, report = null) {
+  getReport(type, report = null, qParams) {
+    const { fromdate, todate, agent, disposition, calltype } = qParams;
 
-      httpOptions.params = new HttpParams({
-        fromString: params
-      });
+    let params = '';
+        params += 'fromdate=' + (fromdate || '2014-01-10') + '';
+        params += '&todate=' + (todate || '2019-10-27') + '';
+        params += '&agent=' + (agent || 'all') + '';
+        params += '&group=' + (group || 'all') + '';
+        params += '&disposition=' + (disposition || 'all') + '';
+        params += '&calltype=' + (calltype || 'all') + '';
+        params += '&page-view=2';
+        params += '&refresh-time=0';
+        params += '&report-type=hosted';
+        params += '&output-type=duration';
 
-      let url = `${api}/reports/${type}`;
-          url += report !== null ? `/${report}/` : `${'/'}`;
+    httpOptions.params = new HttpParams({
+      fromString: params
+    });
 
-      return this.http.get(url, httpOptions);
-    }
+    let url = `${api}/reports/${type}`;
+        url += report !== null ? `/${report}/` : `${'/'}`;
 
-    getFilter(type) {
-      const url = `${api}/v2/${type}`;
-      return this.http.get(url, httpOptions);
-    }
+    return this.http.get(url, httpOptions);
+  }
 
-    getUser() {
-      const url = `${api}/v2/user`;
-      return this.http.get(url, httpOptions)
-        .subscribe(
-          data => {
-            this._users$.next(data);
-          }
-        );
-    }
+  getFilter(type) {
+    const url = `${api}/v2/${type}`;
+    return this.http.get(url, httpOptions);
+  }
+
+  getUser() {
+    const url = `${api}/v2/user`;
+    return this.http.get(url, httpOptions)
+      .subscribe(
+        data => {
+          this._users$.next(data);
+        }
+      );
+  }
 }

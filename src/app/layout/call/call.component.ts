@@ -26,7 +26,7 @@ export class CallComponent {
         this.tableRows = [];
         this.totals = 0;
 
-        this.reporting.getReport(event.type, event.report)
+        this.reporting.getReport(event.type, event.report, event.params)
             .subscribe(
                 data => {
                     this.tableHeaders = data[0]['headers'];

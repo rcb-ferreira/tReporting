@@ -1,11 +1,13 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router, NavigationEnd, ActivationEnd, UrlTree, UrlSegmentGroup, PRIMARY_OUTLET, UrlSegment } from '@angular/router';
+import { Component, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
+import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+
+import { Router, NavigationEnd, UrlTree, UrlSegmentGroup, PRIMARY_OUTLET, UrlSegment } from '@angular/router';
 import { ReportingService } from 'src/app/shared/services';
 
 export interface SearchEvent {
     type: string;
     report: string;
-    params: string;
+    params: any;
 }
 
 @Component({
@@ -15,14 +17,26 @@ export interface SearchEvent {
 })
 export class FiltersComponent implements OnInit {
     filters: any[] = [];
+    filterSelected: any[] = [];
+    date: { year: number, day: number, month: number };
     @Output() search = new EventEmitter<SearchEvent>();
 
     constructor(
         readonly router: Router,
         readonly reporting: ReportingService,
+        private calendar: NgbCalendar,
     ) {}
 
+    get getDate() {
+        return this.calendar.getToday();
+    }
+
+    @ViewChild('fromdate', { static: true }) fromdate: ElementRef;
+    @ViewChild('todate', { static: true }) todate: ElementRef;
+
     ngOnInit() {
+        this.filterSelected = [];
+
         // On initial load fetch route
         this.fetchRoute(this.router.url);
 
@@ -49,8 +63,14 @@ export class FiltersComponent implements OnInit {
         this.search.emit({
             type: s[1]['path'],
             report: s[0]['path'],
-            params: tree.queryParams.toString()
+            params: tree.queryParams
         });
+
+        this.setFormData();
+    }
+
+    setFilter(type, data) {
+        this.filterSelected[`${type}`] = data ;
     }
 
     filter(type) {
@@ -62,5 +82,13 @@ export class FiltersComponent implements OnInit {
                 },
                 error => console.log('error', error)
             );
+    }
+
+    setFormData() {
+        const today = `${this.getDate.year}-${this.getDate.day}-${this.getDate.month}`;
+        const from = `${this.getDate.year}-${this.getDate.day}-${this.getDate.month - 1}`;
+
+        this.fromdate.nativeElement.value = from;
+        this.todate.nativeElement.value = today;
     }
 }
