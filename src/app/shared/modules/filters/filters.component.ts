@@ -20,7 +20,11 @@ export class FiltersComponent implements OnInit {
     toModel = {};
     filters: any[] = [];
     filterSelected: any[] = [];
-    date: { year: number, day: number, month: number };
+
+    type: string;
+    report: string;
+    params: any;
+
     @Output() search = new EventEmitter<SearchEvent>();
 
     constructor(
@@ -48,6 +52,12 @@ export class FiltersComponent implements OnInit {
                 this.fetchRoute(this.router.url);
             }
         });
+
+        ['agents', 'groups', 'dispositions', 'calltypes'].map(
+            val => {
+                this.filter(val);
+            }
+        );
     }
 
     fetchRoute(url) {
@@ -62,12 +72,23 @@ export class FiltersComponent implements OnInit {
             s[1]['path'] = 'hours';
         }
 
-        this.setFormData(s[1]['path'], s[0]['path'], tree.queryParams);
+        this.type = s[1]['path'];
+        this.report = s[0]['path'];
+        this.params = tree.queryParams;
+
+        this.setFormData(this.type, this.report, this.params);
     }
 
     setFilter(type, data) {
         if (!data) { return; }
         this.filterSelected[`${type}`] = data ;
+
+        this.params[`${type}`] = data;
+        this.search.emit({
+            type: this.type,
+            report: this.report,
+            params: this.params
+        });
     }
 
     filter(type) {
@@ -96,7 +117,7 @@ export class FiltersComponent implements OnInit {
                 day: this.getDate.day,
             };
 
-            params = {
+            this.params = {
                 fromdate: `${this.fromModel['year']}-${this.fromModel['day']}-${this.fromModel['month']}`,
                 todate: `${this.getDate.year}-${this.getDate.day}-${this.getDate.month}`,
                 'output-type': 'duration'
@@ -121,7 +142,7 @@ export class FiltersComponent implements OnInit {
         this.search.emit({
             type,
             report,
-            params
+            params: this.params
         });
     }
 }

@@ -23,7 +23,6 @@ interface State {
 })
 export class ReportingService {
   private _users$ = new BehaviorSubject<any>('');
-  private _reportParams$ = new BehaviorSubject<any>({});
   private _state: State = {
     user: '',
   };
