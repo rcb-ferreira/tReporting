@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { group } from '@angular/animations';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,6 +23,7 @@ interface State {
 })
 export class ReportingService {
   private _users$ = new BehaviorSubject<any>('');
+  private _reportParams$ = new BehaviorSubject<any>({});
   private _state: State = {
     user: '',
   };
@@ -33,29 +33,17 @@ export class ReportingService {
   }
 
   get user$() { return this._users$.asObservable(); }
-  set user(user: string) { this._set({ user }); }
+
+  set user(user: string) { console.log(user); this._set({ user }); }
 
   private _set(patch: Partial<State>) {
     Object.assign(this._state, patch);
   }
 
   getReport(type, report = null, qParams) {
-    const { fromdate, todate, agent, disposition, calltype } = qParams;
-
-    let params = '';
-        params += 'fromdate=' + (fromdate || '2014-01-10') + '';
-        params += '&todate=' + (todate || '2019-10-27') + '';
-        params += '&agent=' + (agent || 'all') + '';
-        params += '&group=' + (group || 'all') + '';
-        params += '&disposition=' + (disposition || 'all') + '';
-        params += '&calltype=' + (calltype || 'all') + '';
-        params += '&page-view=2';
-        params += '&refresh-time=0';
-        params += '&report-type=hosted';
-        params += '&output-type=duration';
 
     httpOptions.params = new HttpParams({
-      fromString: params
+      fromObject: qParams
     });
 
     let url = `${api}/reports/${type}`;

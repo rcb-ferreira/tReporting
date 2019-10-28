@@ -16,6 +16,8 @@ export interface SearchEvent {
     styleUrls: ['./filters.component.scss'],
 })
 export class FiltersComponent implements OnInit {
+    fromModel = {};
+    toModel = {};
     filters: any[] = [];
     filterSelected: any[] = [];
     date: { year: number, day: number, month: number };
@@ -60,21 +62,15 @@ export class FiltersComponent implements OnInit {
             s[1]['path'] = 'hours';
         }
 
-        this.search.emit({
-            type: s[1]['path'],
-            report: s[0]['path'],
-            params: tree.queryParams
-        });
-
-        this.setFormData();
+        this.setFormData(s[1]['path'], s[0]['path'], tree.queryParams);
     }
 
     setFilter(type, data) {
+        if (!data) { return; }
         this.filterSelected[`${type}`] = data ;
     }
 
     filter(type) {
-
         this.reporting.getFilter(type)
             .subscribe(
                 data => {
@@ -84,11 +80,48 @@ export class FiltersComponent implements OnInit {
             );
     }
 
-    setFormData() {
-        const today = `${this.getDate.year}-${this.getDate.day}-${this.getDate.month}`;
-        const from = `${this.getDate.year}-${this.getDate.day}-${this.getDate.month - 1}`;
+    setFormData(type, report, params) {
+        const { fromdate, todate, agent, group, disposition, calltype } = params;
 
-        this.fromdate.nativeElement.value = from;
-        this.todate.nativeElement.value = today;
+        this.setFilter('agents', agent);
+        this.setFilter('groups', group);
+        this.setFilter('dispositions', disposition);
+        this.setFilter('calltypes', calltype);
+
+        if (!fromdate || !todate ) {
+            this.toModel = this.getDate;
+            this.fromModel = {
+                year: this.getDate.year - 2,
+                month: this.getDate.month,
+                day: this.getDate.day,
+            };
+
+            params = {
+                fromdate: `${this.fromModel['year']}-${this.fromModel['day']}-${this.fromModel['month']}`,
+                todate: `${this.getDate.year}-${this.getDate.day}-${this.getDate.month}`,
+                'output-type': 'duration'
+            };
+        } else {
+            const fromArray = fromdate.split('-');
+            const toArray = todate.split('-');
+
+            this.fromModel = {
+                year: +fromArray[0],
+                month: +fromArray[1],
+                day: +fromArray[2],
+            };
+
+            this.toModel = {
+                year: +toArray[0],
+                month: +toArray[1],
+                day: +toArray[2],
+            };
+        }
+
+        this.search.emit({
+            type,
+            report,
+            params
+        });
     }
 }
