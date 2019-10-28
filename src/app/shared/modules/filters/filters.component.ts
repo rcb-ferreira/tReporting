@@ -1,5 +1,8 @@
 import { Component, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
-import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, Subject, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+
 
 import { Router, NavigationEnd, UrlTree, UrlSegmentGroup, PRIMARY_OUTLET, UrlSegment } from '@angular/router';
 import { ReportingService } from 'src/app/shared/services';
@@ -16,8 +19,8 @@ export interface SearchEvent {
     styleUrls: ['./filters.component.scss'],
 })
 export class FiltersComponent implements OnInit {
-    fromModel = {};
     toModel = {};
+    fromModel = {};
     filters: any[] = [];
     filterSelected: any[] = [];
 
@@ -26,6 +29,8 @@ export class FiltersComponent implements OnInit {
     params: any;
 
     @Output() search = new EventEmitter<SearchEvent>();
+
+    model: any;
 
     constructor(
         readonly router: Router,
@@ -37,8 +42,22 @@ export class FiltersComponent implements OnInit {
         return this.calendar.getToday();
     }
 
-    @ViewChild('fromdate', { static: true }) fromdate: ElementRef;
-    @ViewChild('todate', { static: true }) todate: ElementRef;
+    @ViewChild('instance', { static: true }) instance: NgbTypeahead;
+    focus$ = new Subject<string>();
+    click$ = new Subject<string>();
+
+    searchterm = (text$: Observable<string>) => {
+
+        const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+        const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+        const inputFocus$ = this.focus$;
+
+        return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+            map(term => (term === '' ? this.filters['agents']
+                : this.filters['agents'].filter(v => v.toString().indexOf(term) > -1)).slice(0, 10)
+            )
+        );
+    }
 
     ngOnInit() {
         this.filterSelected = [];
