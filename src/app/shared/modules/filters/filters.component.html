@@ -31,7 +31,7 @@
                             #instance="ngbTypeahead"/>
                     </div>
                     <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                        <button class="btn btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['groups'] || 'All Groups'}}</button>
+                        <button class="btn btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['group'] || 'All Groups'}}</button>
                         <div class="dropdown-menu" ngbDropdownMenu>
                             <button ngbDropdownItem (click)="setFilter('group', 'all')">All Groups</button>
                             <button ngbDropdownItem *ngFor="let item of filters['groups']"
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                        <button class="btn btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['dispositions'] || 'All Dispositions' }}</button>
+                        <button class="btn btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['disposition'] || 'All Dispositions' }}</button>
                         <div class="dropdown-menu" ngbDropdownMenu>
                             <button ngbDropdownItem (click)="setFilter('disposition', 'all')">All Dispositions</button>
                             <button ngbDropdownItem *ngFor="let item of filters['dispositions']" (click)="setFilter('disposition', item)">{{ item }}</button>
