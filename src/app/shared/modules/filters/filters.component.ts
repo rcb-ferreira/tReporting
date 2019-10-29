@@ -144,7 +144,10 @@ export class FiltersComponent implements OnInit {
                     // Set group value in view
                     if (type === 'groups') {
                         const item = this.filters[`${type}`].filter(val => val.groupId === +params['group']);
-                        this.filterSelected[`group-selected`] = item[0].groupName;
+
+                        if (item[0] && item[0].groupName) {
+                            this.filterSelected[`group-selected`] = item[0].groupName;
+                        }
                     }
                 },
                 error => console.log('error', error)
