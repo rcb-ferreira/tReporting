@@ -1,77 +1,117 @@
-<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
-    <div class="list-group">
-        <div class="nested-menu">
-            <a class="list-group-item">
-                <i class="fa fa-plus"></i>
-                <span>{{ 'Call' | translate }}</span>
+<nav class="sidebar bg-light" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+    <div class="sidebar-sticky">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>{{ 'Call' | translate }}</span>
+            <a class="d-flex align-items-center text-muted" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-plus-circle">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
             </a>
-            <span class="nested expand">
-                <ul class="submenu">
-                    <li>
-                        <a [routerLink]="['/call/trail']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                            <i class="fa fa-monument"></i>
-                            <span>{{ 'Trail details' | translate }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/call/interaction']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                            <i class="fa fa-monument"></i>
-                            <span>{{ 'Interaction' | translate }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </span>
-        </div>
-        <div class="nested-menu">
-            <a class="list-group-item">
-                <i class="fa fa-plus"></i>
-                <span>{{ 'Distribution' | translate }}</span>
+        </h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/call/trail']" [routerLinkActive]="['active']">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>&nbsp;<span>{{ 'Trail details' | translate }}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/call/interaction']" [routerLinkActive]="['active']" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>&nbsp;<span>{{ 'Interaction' | translate }}</span>
+                </a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>{{ 'Distribution' | translate }}</span>
+            <a class="d-flex align-items-center text-muted" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-plus-circle">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
             </a>
-            <span class="nested expand">
-                <ul class="submenu">
-                    <li>
-                        <a [routerLink]="['/distribution/agent']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                            <i class="fa fa-monument"></i>
-                            <span>{{ 'Agent' | translate }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/distribution/group']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                            <i class="fa fa-monument"></i>
-                            <span>{{ 'Group' | translate }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/distribution/hourly']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                            <i class="fa fa-monument"></i>
-                            <span>{{ 'Hourly' | translate }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </span>
-        </div>
-        <div class="nested-menu">
-            <a class="list-group-item">
-                <i class="fa fa-plus"></i>
-                <span>{{ 'Heatmap' | translate }}</span>
+        </h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/distribution/agent']" [routerLinkActive]="['active']">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>&nbsp;<span>{{ 'Agent' | translate }}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/distribution/group']" [routerLinkActive]="['active']" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>&nbsp;<span>{{ 'Group' | translate }}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/distribution/hourly']" [routerLinkActive]="['active']">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-clock">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>&nbsp;<span>{{ 'Hourly' | translate }}</span>
+                </a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>{{ 'Heatmap' | translate }}</span>
+            <a class="d-flex align-items-center text-muted" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-plus-circle">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
             </a>
-            <span class="nested expand">
-                <ul class="submenu">
-                    <li>
-                        <a [routerLink]="['/heatmap/agent']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                            <i class="fa fa-monument"></i>
-                            <span>{{ 'Agent' | translate }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/heatmap/group']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                            <i class="fa fa-monument"></i>
-                            <span>{{ 'Group' | translate }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </span>
-        </div>
+        </h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/heatmap/agent']" [routerLinkActive]="['active']">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>&nbsp;<span>{{ 'Agent' | translate }}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/heatmap/group']" [routerLinkActive]="['active']" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>&nbsp;<span>{{ 'Group' | translate }}</span>
+                </a>
+            </li>
+        </ul>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
         <i class="fa fa-fw fa-angle-double-{{collapsed?'right':'left'}}"></i>
