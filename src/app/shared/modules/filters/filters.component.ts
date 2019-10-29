@@ -84,17 +84,20 @@ export class FiltersComponent implements OnInit {
         const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
         const s: UrlSegment[] = g.segments;
 
-        if (s[0]['path'].match(/call/gi)) {
-            s[0]['path'] = null;
-        } else if (s[1]['path'].match(/hourly/gi)) {
-            s[0]['path'] = null;
-            s[1]['path'] = 'hours';
-        }
-
         this.type = s[1]['path'];
         this.report = s[0]['path'];
-        this.params = tree.queryParams;
 
+        if (s[1]['path'].match(/interaction/gi)) {
+            this.type = 'interaction/overview';
+            this.report = null;
+        } else if (s[1]['path'].match(/hourly/gi)) {
+            this.type = 'hours';
+            this.report = null;
+        } else if (s[0]['path'].match(/call/gi)) {
+            this.report = null;
+        }
+
+        this.params = tree.queryParams;
         this.setFormData(this.type, this.report, this.params);
     }
 
