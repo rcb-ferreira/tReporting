@@ -1,14 +1,6 @@
-# SB Admin rewritten in Angular8 and Bootstrap 4
+# HTRM Admin build in Angular8 and Bootstrap 4
 
 Simple Dashboard Admin App built using Angular 8 and Bootstrap 4
-
-This project is a port of the famous Free Admin Bootstrap Theme [SB Admin v8.0](http://startbootstrap.com/template-overviews/sb-admin-2/) to Angular8 Theme.
-
-Powered by [StartAngular](http://startangular.com/) & [StrapUI](http://strapui.com/)
-
-## [Demo](http://rawgit.com/start-angular/SB-Admin-BS4-Angular-6/master/dist/)
-
-## [SB Admin Material version](https://github.com/start-javascript/sb-admin-material)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.0.
 
@@ -16,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Provides fast, reliable and extensible starter for the development of Angular projects.
 
-`sb-admin-bs4-angular8` provides the following features:
+`HTRM-UI` provides the following features:
 
 *   Developed using boostrap-v4.0.0
 *   angular-v8.0.0
@@ -36,8 +28,8 @@ Provides fast, reliable and extensible starter for the development of Angular pr
 In order to start the project use:
 
 ```bash
-$ git clone https://github.com/start-angular/SB-Admin-BS4-Angular-8.git
-$ cd SB-Admin-BS4-Angular-8
+$ git clone https://code.forge-cloud.com/projects/PP/repos/htrm-ui/browse
+$ cd htrm-ui
 # install the project's dependencies
 $ npm install
 # watches your files and uses livereload by default run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
