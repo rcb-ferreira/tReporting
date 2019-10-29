@@ -30,7 +30,7 @@ export class DistributionComponent {
         this.reporting.getReport(event.type, event.report, event.params)
             .subscribe(
                 data => {
-                    this.tableHeaders = data[0]['headers'];
+                    this.tableHeaders = data['headers'];
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 }
