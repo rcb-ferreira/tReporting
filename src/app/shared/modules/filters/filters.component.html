@@ -1,18 +1,18 @@
 <div class="row">
     <div class="col px-md">
-        <div class="p-1 border bg-light">
+        <div class="p-2 border bg-light">
             <div class="form-inline">
                 <form class="form-inline">
                     <div class="form-group mr-2">
                         <div class="input-group">
                             <input class="form-control" placeholder="From date" name="dpFrom" ngbDatepicker
-                                #dF="ngbDatepicker" [(ngModel)]="fromModel" (click)="dF.toggle()">
+                                #dF="ngbDatepicker" [(ngModel)]="fromModel" (click)="dF.toggle()" (dateSelect)="setDate('fromdate', $event)">
                         </div>
                     </div>
                     <div class="form-group mr-2">
                         <div class="input-group">
                             <input class="form-control" placeholder="To date" name="dpTo" ngbDatepicker
-                                #dT="ngbDatepicker" [(ngModel)]="toModel" (click)="dT.toggle()">
+                                #dT="ngbDatepicker" [(ngModel)]="toModel" (click)="dT.toggle()" (dateSelect)="setDate('todate', $event)">
                         </div>
                     </div>
                 </form>
@@ -22,20 +22,20 @@
                         <input id="typeahead-focus" 
                             type="text" 
                             class="btn btn-outline-secondary" 
-                            placeholder="All Agents" 
-                            [(ngModel)]="model"
-                            [ngbTypeahead]="searchterm" 
+                            placeholder="Agents" 
+                            [(ngModel)]="agentModel"
+                            [ngbTypeahead]="searchagent"
                             (focus)="focus$.next('');" 
                             (click)="click$.next('');"
                             (selectItem)="setFilter('agent', $event.item)"
-                            #instance="ngbTypeahead"/>
+                            #agent="ngbTypeahead"/>
                     </div>
                     <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                        <button class="btn btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['group'] || 'All Groups'}}</button>
+                        <button class="btn btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['group-selected'] || 'All Groups'}}</button>
                         <div class="dropdown-menu" ngbDropdownMenu>
-                            <button ngbDropdownItem (click)="setFilter('group', 'all')">All Groups</button>
-                            <button ngbDropdownItem *ngFor="let item of filters['groups']"
-                            (click)="setFilter('group', item.groupName)">{{ item.groupName }}</button>
+                            <button ngbDropdownItem (click)="setFilter('group', {groupId: 'all', groupName: ''})">All Groups</button>
+                            <button ngbDropdownItem *ngFor="let item of filters['groups']; let i = index;"
+                            (click)="setFilter('group', item)">{{ item.groupName }}</button>
                         </div>
                     </div>
                     <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">

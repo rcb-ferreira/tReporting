@@ -30,7 +30,11 @@ export class HeatmapComponent {
         this.reporting.getReport(event.type, event.report, event.params)
             .subscribe(
                 data => {
-                    this.tableHeaders = data['headers'];
+                    this.tableHeaders = data['headers'].filter(val => {
+                        if (val.visible !== false) {
+                            return val;
+                        }
+                    });
                     this.tableRows = data['data'];
                     this.totals = data['rows'];
                 }
