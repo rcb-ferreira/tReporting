@@ -3,54 +3,52 @@
         <div class="p-2 border bg-light">
             <div class="form-inline">
                 <form class="form-inline">
-                    <div class="form-group mr-2">
+                    <div class="form-group mr-1">
                         <div class="input-group">
                             <input class="form-control" placeholder="From date" name="dpFrom" ngbDatepicker
                                 #dF="ngbDatepicker" [(ngModel)]="fromModel" (click)="dF.toggle()" (dateSelect)="setDate('fromdate', $event)">
                         </div>
                     </div>
-                    <div class="form-group mr-2">
+                    <div class="form-group mr-1">
                         <div class="input-group">
                             <input class="form-control" placeholder="To date" name="dpTo" ngbDatepicker
                                 #dT="ngbDatepicker" [(ngModel)]="toModel" (click)="dT.toggle()" (dateSelect)="setDate('todate', $event)">
                         </div>
                     </div>
                 </form>
-
-                <div class="btn-group mr-2">
-                    <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                        <input id="typeahead-focus" 
-                            type="text" 
-                            class="btn btn-outline-secondary" 
-                            placeholder="Agents" 
-                            [(ngModel)]="agentModel"
-                            [ngbTypeahead]="searchagent"
-                            (focus)="focus$.next('');" 
-                            (click)="click$.next('');"
-                            (selectItem)="setFilter('agent', $event.item)"
-                            #agent="ngbTypeahead"/>
-                    </div>
-                    <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                        <button class="btn btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['group-selected'] || 'All Groups'}}</button>
-                        <div class="dropdown-menu" ngbDropdownMenu>
-                            <button ngbDropdownItem (click)="setFilter('group', {groupId: 'all', groupName: ''})">All Groups</button>
-                            <button ngbDropdownItem *ngFor="let item of filters['groups']; let i = index;"
-                            (click)="setFilter('group', item)">{{ item.groupName }}</button>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-1" role="group" aria-label="First group">
+                        <div class="btn-group">
+                            <input id="typeahead-focus" type="text" class="btn btn-outline-secondary" placeholder="Agents" [(ngModel)]="agentModel"
+                                [ngbTypeahead]="searchagent" (focus)="focus$.next('');" (click)="click$.next('');"
+                                (selectItem)="setFilter('agent', $event.item)" #agent="ngbTypeahead" />
                         </div>
-                    </div>
-                    <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                        <button class="btn btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['disposition'] || 'All Dispositions' }}</button>
-                        <div class="dropdown-menu" ngbDropdownMenu>
-                            <button ngbDropdownItem (click)="setFilter('disposition', 'all')">All Dispositions</button>
-                            <button ngbDropdownItem *ngFor="let item of filters['dispositions']" (click)="setFilter('disposition', item)">{{ item }}</button>
+                        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                            <button class="btn btn-outline-secondary"
+                                ngbDropdownToggle>{{ filterSelected['group-selected'] || 'All Groups'}}</button>
+                            <div class="dropdown-menu" ngbDropdownMenu>
+                                <button ngbDropdownItem (click)="setFilter('group', {groupId: 'all', groupName: ''})">All Groups</button>
+                                <button ngbDropdownItem *ngFor="let item of filters['groups']; let i = index;"
+                                    (click)="setFilter('group', item)">{{ item.groupName }}</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                        <button class="btn btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['calltype'] || 'All Calltypes' }}</button>
-                        <div class="dropdown-menu" ngbDropdownMenu>
-                            <button ngbDropdownItem (click)="setFilter('calltype', 'all')">All Calltypes</button>
-                            <button ngbDropdownItem *ngFor="let item of filters['calltypes']"
-                            (click)="setFilter('calltype', item.type)">{{ item.type }}</button>
+                        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                            <button class="btn btn-outline-secondary"
+                                ngbDropdownToggle>{{ filterSelected['disposition'] || 'All Dispositions' }}</button>
+                            <div class="dropdown-menu" ngbDropdownMenu>
+                                <button ngbDropdownItem (click)="setFilter('disposition', 'all')">All Dispositions</button>
+                                <button ngbDropdownItem *ngFor="let item of filters['dispositions']"
+                                    (click)="setFilter('disposition', item)">{{ item }}</button>
+                            </div>
+                        </div>
+                        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                            <button class="btn btn-outline-secondary"
+                                ngbDropdownToggle>{{ filterSelected['calltype'] || 'All Calltypes' }}</button>
+                            <div class="dropdown-menu" ngbDropdownMenu>
+                                <button ngbDropdownItem (click)="setFilter('calltype', 'all')">All Calltypes</button>
+                                <button ngbDropdownItem *ngFor="let item of filters['calltypes']"
+                                    (click)="setFilter('calltype', item.type)">{{ item.type }}</button>
+                            </div>
                         </div>
                     </div>
                 </div>
