@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ReportingService } from 'src/app/shared/services/reporting.service';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/shared';
 
 @Component({
     selector: 'app-header',
@@ -12,12 +13,21 @@ export class HeaderComponent implements OnInit {
     public pushRightClass: string;
     user$: Observable<string>;
     filters: any[] = [];
+    clients: any;
     constructor(
         public router: Router,
-        public reporting: ReportingService
+        public reporting: ReportingService,
+        public auth: AuthService
     ) {
-        this.filters = [];
-        this.user$ = this.reporting.user$;
+        auth.userProfile$.subscribe(user => {
+            if (user) {
+                const accountCode = user['http://htrm-jwt.herokuapp.com/api/app_metadata']['account_code'];
+                this.user$ = accountCode;
+                this.reporting.user = accountCode;
+                this.filter('account/codes');
+            }
+        });
+
         this.router.events.subscribe(val => {
             if (
                 val instanceof NavigationEnd &&
@@ -49,17 +59,22 @@ export class HeaderComponent implements OnInit {
     }
 
     onLoggedout() {
-        localStorage.removeItem('isLoggedin');
+        this.auth.logout();
     }
 
     filter(type) {
-
         this.reporting.getFilter(type)
             .subscribe(
                 data => {
-                    this.filters[`${type}`] = data;
+                    this.clients = data;
                 },
                 error => console.log('error', error)
             );
+    }
+
+    switchClient(client) {
+        this.user$ = client.client_name;
+        this.reporting.user = client.client_name;
+        this.router.navigateByUrl('/');
     }
 }

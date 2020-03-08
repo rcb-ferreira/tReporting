@@ -12,14 +12,14 @@ export class NotificationService {
         // Had an issue with the snackbar being ran outside of angular's zone.
         this.zone.run(() => {
             // temp alert message
-            alert(message);
+            console.log('showSuccess', message);
         });
     }
 
     showError(message: string): void {
         this.zone.run(() => {
             // temp alert message
-            alert(message);
+            console.log('showError', message);
         });
     }
 }

@@ -13,8 +13,6 @@ export interface SortEvent {
   selector: 'th[sortable]',
   // tslint:disable-next-line:no-host-metadata-property
   host: {
-    '[class.asc]': 'direction === "asc"',
-    '[class.desc]': 'direction === "desc"',
     '(click)': 'rotate()'
   }
 })

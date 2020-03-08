@@ -13,7 +13,7 @@ th.asc:before,th.desc:before {
     width: 22px;
     height: 22px;
     float: left;
-    margin-left: -22px
+    margin-left: -5px
 }
 
 th.desc:before {
@@ -21,3 +21,40 @@ th.desc:before {
     transform: rotate(180deg);
     -ms-transform: rotate(180deg)
 }
+
+.drill {
+    cursor: pointer;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+tbody {
+    display:block;
+    overflow:auto;
+    font-size: 12px;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+
+.table-dropdown-ellipse {
+    width: 120px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropdown-menu.show {
+    width: 200px;
+    right: 10px;
+    left: auto;
+}
+

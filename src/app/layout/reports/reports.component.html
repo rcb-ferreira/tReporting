@@ -1,0 +1,4 @@
+<div class="row" *ngIf="!hideTable">
+    <ngbd-table-complete *ngIf="tableRows.length > 0" [tableheaders]="tableHeaders" [tablerows]="tableRows"
+        [rows]="totals" class="table-responsive col-12"></ngbd-table-complete>
+</div>

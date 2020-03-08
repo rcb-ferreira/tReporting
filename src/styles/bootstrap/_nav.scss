@@ -11,6 +11,13 @@
   list-style: none;
 }
 
+.nav-tabs {
+    .nav-link {
+        color: #dee2e6;
+        background: #f4f4f4;
+    }
+}
+
 .nav-link {
   display: block;
   padding: $nav-link-padding-y $nav-link-padding-x;
@@ -31,6 +38,7 @@
 
 .nav-tabs {
   border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
+  background: $nav-tabs-background;
 
   .nav-item {
     margin-bottom: -$nav-tabs-border-width;
@@ -38,6 +46,7 @@
 
   .nav-link {
     border: $nav-tabs-border-width solid transparent;
+    border-color: $nav-tabs-link-hover-border-color;
     @include border-top-radius($nav-tabs-border-radius);
 
     @include hover-focus {

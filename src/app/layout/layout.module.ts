@@ -7,8 +7,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
-import { LoaderModule } from '../shared/modules/loader/loader.module';
-import { TablesModule } from './tables/tables.module';
+import { FiltersModule, LoaderModule } from '../shared';
 
 @NgModule({
     imports: [
@@ -16,8 +15,8 @@ import { TablesModule } from './tables/tables.module';
         LayoutRoutingModule,
         TranslateModule,
         LoaderModule,
-        TablesModule,
-        NgbDropdownModule
+        NgbDropdownModule,
+        FiltersModule
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
 })

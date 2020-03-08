@@ -43,69 +43,92 @@ function matches(tableitem: TableItem, term: string, pipe: PipeTransform) {
     || pipe.transform(tableitem.end_reason).includes(term);
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class TableItemService {
-  private _loading$ = new BehaviorSubject<boolean>(true);
-  private _search$ = new Subject<void>();
-  private _tableitems$ = new BehaviorSubject<TableItem[]>([]);
-  private _total$ = new BehaviorSubject<number>(0);
+    private _loading$ = new BehaviorSubject<boolean>(true);
+    private _search$ = new Subject<void>();
+    private _tableitems$ = new BehaviorSubject<TableItem[]>([]);
+    private _total$ = new BehaviorSubject<number>(0);
 
-  private _state: State = {
-    page: 1,
-    pageSize: 10,
-    searchTerm: '',
-    sortColumn: '',
-    sortDirection: '',
-    sortItems: []
-  };
+    private _state: State = {
+        page: 1,
+        pageSize: 100,
+        searchTerm: '',
+        sortColumn: '',
+        sortDirection: '',
+        sortItems: []
+    };
 
-  constructor(private pipe: DecimalPipe) {
-    this._search$.pipe(
-      tap(() => this._loading$.next(true)),
-      debounceTime(200),
-      switchMap(() => this._search()),
-      delay(200),
-      tap(() => this._loading$.next(false))
-    ).subscribe(result => {
-      this._tableitems$.next(result.tableitems);
-      this._total$.next(result.total);
-    });
+    constructor(private pipe: DecimalPipe) {
+        this._search$
+            .pipe(
+                switchMap(() => this._search()),
+            )
+            .subscribe(result => {
+                this._tableitems$.next(result.tableitems);
+                this._total$.next(result.total);
+            });
 
-    this._search$.next();
-  }
+        this._search$.next();
+    }
 
-  get tableitems$() { return this._tableitems$.asObservable(); }
-  get total$() { return this._total$.asObservable(); }
-  get loading$() { return this._loading$.asObservable(); }
-  get page() { return this._state.page; }
-  get pageSize() { return this._state.pageSize; }
-  get searchTerm() { return this._state.searchTerm; }
-  get sortItems() { return this._state.sortItems; }
+    get tableitems$() {
+        return this._tableitems$.asObservable();
+    }
+    get total$() {
+        return this._total$.asObservable();
+    }
+    get loading$() {
+        return this._loading$.asObservable();
+    }
+    get page() {
+        return this._state.page;
+    }
+    get pageSize() {
+        return this._state.pageSize;
+    }
+    get searchTerm() {
+        return this._state.searchTerm;
+    }
+    get sortItems() {
+        return this._state.sortItems;
+    }
+    get sortColumn() {
+        return this._state.sortColumn;
+    }
+    get sortDirection() {
+        return this._state.sortDirection;
+    }
 
-  set page(page: number) { this._set({page}); }
-  set pageSize(pageSize: number) { this._set({pageSize}); }
-  set searchTerm(searchTerm: string) { this._set({searchTerm}); }
-  set sortColumn(sortColumn: string) { this._set({sortColumn}); }
-  set sortDirection(sortDirection: SortDirection) { this._set({sortDirection}); }
-  set sortItems(sortItems) { this._set({sortItems}); }
+    set page(page: number) {
+        this._set({ page });
+    }
+    set pageSize(pageSize: number) {
+        this._set({ pageSize });
+    }
+    set searchTerm(searchTerm: string) {
+        this._set({ searchTerm });
+    }
+    set sortColumn(sortColumn: string) {
+        this._set({ sortColumn });
+    }
+    set sortDirection(sortDirection: SortDirection) {
+        this._set({ sortDirection });
+    }
+    set sortItems(sortItems) {
+        this._set({ sortItems });
+    }
 
-  private _set(patch: Partial<State>) {
-    Object.assign(this._state, patch);
-    this._search$.next();
-  }
+    private _set(patch: Partial<State>) {
+        Object.assign(this._state, patch);
+        this._search$.next();
+    }
 
-  private _search(): Observable<SearchResult> {
-    const {sortColumn, sortDirection, pageSize, page, searchTerm, sortItems} = this._state;
+    private _search(): Observable<SearchResult> {
+        const { sortItems } = this._state;
+        const tableitems = sortItems;
+        const total = tableitems.length;
 
-    // 1. sort
-    let tableitems = sort(sortItems, sortColumn, sortDirection);
-
-    // 2. filter
-    // tableitems = tableitems.filter(country => matches(country, searchTerm, this.pipe));
-    const total = tableitems.length;
-
-    // 3. paginate
-    tableitems = tableitems.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({tableitems, total});
-  }
+        return of({ tableitems, total });
+    }
 }

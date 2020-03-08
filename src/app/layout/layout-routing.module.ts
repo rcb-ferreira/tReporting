@@ -8,9 +8,9 @@ const routes: Routes = [
         component: LayoutComponent,
         children: [
             { path: '', redirectTo: 'call', pathMatch: 'prefix' },
-            { path: 'call', loadChildren: () => import('./call/call.module').then(m => m.CallModule) },
-            { path: 'distribution', loadChildren: () => import('./distribution/distribution.module').then(m => m.DistributionModule) },
-            { path: 'heatmap', loadChildren: () => import('./heatmap/heatmap.module').then(m => m.HeatmapModule) }
+            { path: 'call', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
+            { path: 'distribution', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
+            { path: 'heatmap', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
         ]
     }
 ];

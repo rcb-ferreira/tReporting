@@ -1,26 +1,32 @@
 <nav class="navbar navbar-expand-lg fixed-top">
-    <span class="navbar-brand">Teleforge </span>
-    <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown" ngbDropdown>
-                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                    <i class="fa fa-user"></i> {{ user$ | async }} <b class="caret"></b>
+    <a class="navbar-brand" href="#">Teleforge</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown" ngbDropdown>
+            <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                <i class="fa fa-user"></i> {{ user$ }} <b class="caret"></b>
+            </a>
+            <div class="dropdown-menu-right" ngbDropdownMenu>
+                <a  *ngFor="let client of clients"
+                    class="dropdown-item" href="javascript:void(0)" (click)="switchClient(client)">
+                    <i class="fa fa-fw fa-user"></i> {{ client.client_name }}
                 </a>
-                <div class="dropdown-menu-right" ngbDropdownMenu>
-                    <a class="dropdown-item" href="javascript:void(0)">
-                        <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}
-                    </a>
-                    <a class="dropdown-item" href="javascript:void(0)">
-                        <i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}
-                    </a>
-                    <a class="dropdown-item" href="javascript:void(0)">
-                        <i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}
-                    </a>
-                    <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
-                        <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </div>
+                <!-- <a class="dropdown-item" href="javascript:void(0)">
+                    <i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}
+                </a>
+                <a class="dropdown-item" href="javascript:void(0)">
+                    <i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}
+                </a> -->
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="onLoggedout()">
+                <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
+            </a>
+        </li>
+    </ul>
 </nav>

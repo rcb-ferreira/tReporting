@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+    showTabs = [];
     isActive: boolean;
     collapsed: boolean;
     showMenu: string;
@@ -32,8 +33,14 @@ export class SidebarComponent implements OnInit {
         this.collapsed = false;
         this.showMenu = '';
         this.pushRightClass = 'push-right';
+
+        this.setTabs('reports');
     }
 
+    setTabs(value) {
+        this.showTabs = [];
+        this.showTabs[value] = true;
+    }
 
     eventCalled() {
         this.isActive = !this.isActive;

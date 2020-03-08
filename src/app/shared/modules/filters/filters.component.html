@@ -1,69 +1,101 @@
-<div class="row">
-    <div class="col px-md">
-        <div class="p-2 border bg-light">
-            <div class="form-inline">
-                <form class="form-inline">
-                    <div class="form-group mr-1">
-                        <div class="input-group">
-                            <input class="form-control" placeholder="From date" name="dpFrom" ngbDatepicker
-                                #dF="ngbDatepicker" [(ngModel)]="fromModel" (click)="dF.toggle()" (dateSelect)="setDate('fromdate', $event)">
-                        </div>
-                    </div>
-                    <div class="form-group mr-1">
-                        <div class="input-group">
-                            <input class="form-control" placeholder="To date" name="dpTo" ngbDatepicker
-                                #dT="ngbDatepicker" [(ngModel)]="toModel" (click)="dT.toggle()" (dateSelect)="setDate('todate', $event)">
-                        </div>
-                    </div>
-                </form>
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-1" role="group" aria-label="First group">
-                        <div class="btn-group">
-                            <input id="typeahead-focus" type="text" class="btn btn-outline-secondary" placeholder="Agents" [(ngModel)]="agentModel"
-                                [ngbTypeahead]="searchagent" (focus)="focus$.next('');" (click)="click$.next('');"
-                                (selectItem)="setFilter('agent', $event.item)" #agent="ngbTypeahead" />
-                        </div>
-                        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                            <button class="btn btn-outline-secondary"
-                                ngbDropdownToggle>{{ filterSelected['group-selected'] || 'All Groups'}}</button>
-                            <div class="dropdown-menu" ngbDropdownMenu>
-                                <button ngbDropdownItem (click)="setFilter('group', {groupId: 'all', groupName: ''})">All Groups</button>
-                                <button ngbDropdownItem *ngFor="let item of filters['groups']; let i = index;"
-                                    (click)="setFilter('group', item)">{{ item.groupName }}</button>
-                            </div>
-                        </div>
-                        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                            <button class="btn btn-outline-secondary"
-                                ngbDropdownToggle>{{ filterSelected['disposition'] || 'All Dispositions' }}</button>
-                            <div class="dropdown-menu" ngbDropdownMenu>
-                                <button ngbDropdownItem (click)="setFilter('disposition', 'all')">All Dispositions</button>
-                                <button ngbDropdownItem *ngFor="let item of filters['dispositions']"
-                                    (click)="setFilter('disposition', item)">{{ item }}</button>
-                            </div>
-                        </div>
-                        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                            <button class="btn btn-outline-secondary"
-                                ngbDropdownToggle>{{ filterSelected['calltype'] || 'All Calltypes' }}</button>
-                            <div class="dropdown-menu" ngbDropdownMenu>
-                                <button ngbDropdownItem (click)="setFilter('calltype', 'all')">All Calltypes</button>
-                                <button ngbDropdownItem *ngFor="let item of filters['calltypes']"
-                                    (click)="setFilter('calltype', item.type)">{{ item.type }}</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="btn-group ml-auto">
-                    <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                        <button class="btn btn-outline-secondary" ngbDropdownToggle>Export</button>
-                        <div class="dropdown-menu" ngbDropdownMenu>
-                            <button ngbDropdownItem>PDF</button>
-                            <button ngbDropdownItem>CSV</button>
-                            <button ngbDropdownItem>EXCEL</button>
-                            <button ngbDropdownItem>PRINT</button>
-                        </div>
-                    </div>
+<div class="px-md">
+    <div class="p-2">
+        <form class="form-row">
+            <div class="form-group col">
+                <div class="input-group">
+                    <input class="form-control" placeholder="From date" name="dpFrom" ngbDatepicker
+                        #dF="ngbDatepicker" [(ngModel)]="model.from" (click)="dF.toggle()" (dateSelect)="setDate('fromdate', $event)">
                 </div>
             </div>
+            <div class="form-group col">
+                <div class="input-group">
+                    <input class="form-control" placeholder="To date" name="dpTo" ngbDatepicker
+                        #dT="ngbDatepicker" [(ngModel)]="model.to" (click)="dT.toggle()" (dateSelect)="setDate('todate', $event)">
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group input-group clearfix">
+            <input #number type="text" class="form-control" placeholder="Search number" aria-label="Search number"
+                aria-describedby="basic-addon1">
+            <div class="input-group-append">
+                <button *ngIf="!clearNumber" class="btn btn-outline-secondary" type="button"
+                    (click)="searchnumber(number.value)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-plus-circle">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button *ngIf="clearNumber" class="btn btn-outline-secondary" type="button" (click)="searchnumber('')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-plus-circle">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group input-group">
+            <input id="typeahead-focus" type="text" class="form-control" placeholder="Agents" [(ngModel)]="model.agent"
+                [ngbTypeahead]="searchagent" (focus)="focus$.next('');" (click)="click$.next('');"
+                (selectItem)="setFilter('agent', $event.item)" #agent="ngbTypeahead" />
+            <div *ngIf="model.agent" class="input-group-append" style="margin-left: -40px;">
+                <button class="btn btn-outline-secondary" type="button" (click)="clearFilter('agent')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-plus-circle">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group clearfix" ngbDropdown>
+            <button class="btn btn-block btn-outline-secondary"
+                ngbDropdownToggle>{{ filterSelected['group-selected'] || 'All Groups'}}</button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button ngbDropdownItem (click)="setFilter('group', {groupId: 'all', groupName: ''})">All Groups</button>
+                <button ngbDropdownItem *ngFor="let item of filters['groups']; let i = index;"
+                    (click)="setFilter('group', item)">{{ item.groupName }}</button>
+            </div>
+        </div>
+
+        <div class="form-group clearfix" ngbDropdown>
+            <button class="btn btn-block btn-outline-secondary"
+                ngbDropdownToggle>{{ filterSelected['disposition'] || 'All Dispositions' }}</button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button ngbDropdownItem (click)="setFilter('disposition', 'all')">All Dispositions</button>
+                <button ngbDropdownItem *ngFor="let item of filters['dispositions']"
+                    (click)="setFilter('disposition', item)">{{ item }}</button>
+            </div>
+        </div>
+
+        <div class="form-group clearfix" ngbDropdown>
+            <button class="btn btn-block btn-outline-secondary" ngbDropdownToggle>{{ filterSelected['calltype'] || 'All Calltypes' }}</button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button ngbDropdownItem (click)="setFilter('calltype', 'all')">All Calltypes</button>
+                <button ngbDropdownItem *ngFor="let item of filters['calltypes']"
+                    (click)="setFilter('calltype', item.type)">{{ item.type }}</button>
+            </div>
+        </div>
+
+        <div class="btn-group clearfix">
+            <button class="btn btn-block btn-outline-secondary">
+                CSV
+                <svg xmlns="http://www.w3.org/2000/svg" width="14"
+                    height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="feather feather-plus-circle">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+            </button>
         </div>
     </div>
 </div>
+
